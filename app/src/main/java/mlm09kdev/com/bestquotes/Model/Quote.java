@@ -7,7 +7,6 @@ public class Quote {
     private String quote;
     private String author;
 
-
     public String getAuthor() {
         return author;
     }
