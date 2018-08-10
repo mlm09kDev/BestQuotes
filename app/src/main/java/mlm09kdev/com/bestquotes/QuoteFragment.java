@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import mlm09kdev.com.bestquotes.Model.Quote;
 
 
@@ -37,14 +39,20 @@ public class QuoteFragment extends Fragment {
         String quote = getArguments().getString("quote");
         String author = getArguments().getString("author");
 
+
+        int colors[] = new int[] {R.color.blue_500, R.color.pink_900, R.color.green_400,
+                R.color.lime_400, R.color.orange_400, R.color.amber_800, R.color.pink_800,
+                R.color.grey_700, R.color.blue_grey_800, R.color.amber_100, R.color.cyan_A400, R.color.dark_purple_A400};
+
         quoteText.setText(quote);
         authorText.setText("-" + author);
+        cardView.setBackgroundResource(getRandomQuote(colors));
 
 
         return quoteView;
     }
 
-    public static final QuoteFragment newInstance(String quote, String author){
+    public static final QuoteFragment newInstance(String quote, String author) {
         QuoteFragment fragment = new QuoteFragment();
 
         Bundle bundle = new Bundle();
@@ -54,6 +62,15 @@ public class QuoteFragment extends Fragment {
 
         return fragment;
 
+    }
+
+    int getRandomQuote(int[] colorArray) {
+        int color;
+        int quotesArrayLength = colorArray.length;
+
+        int randomNum = ThreadLocalRandom.current().nextInt(quotesArrayLength);
+        color = colorArray[randomNum];
+        return color;
     }
 
 }
