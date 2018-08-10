@@ -20,9 +20,9 @@ import mlm09kdev.com.bestquotes.Model.Quote;
  * Created by Manuel Montes de Oca on 8/8/2018.
  */
 public class QuoteData {
-    ArrayList<Quote> arrayList = new ArrayList<>();
+    ArrayList<Quote> quoteArrayList = new ArrayList<>();
 
-    public void getQoutes() {
+    public void getQuotes(final QuoteListAsyncResponse callBack) {
 
         String URL = "https://raw.githubusercontent.com/mlm09kDev/BestQuotes/master/quoteArray.json";
 
@@ -34,13 +34,17 @@ public class QuoteData {
                         JSONObject quoteObject = response.getJSONObject(i);
                         Quote quote = new Quote();
                         quote.setQuote(quoteObject.getString("quote"));
-                        quote.setQuote(quoteObject.getString("name"));
-                        arrayList.add(quote);
-                        Log.d("QuoteData" + i,quoteObject.getString("name" ));
+                        quote.setAuthor(quoteObject.getString("name"));
+                        Log.d("QuoteData" + i, quoteObject.getString("name" ));
+                        quoteArrayList.add(quote);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
+
+                    }
+                if(null != callBack) {
+                    callBack.processFinished(quoteArrayList);
                 }
             }
         }, new Response.ErrorListener() {
